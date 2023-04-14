@@ -1,6 +1,6 @@
 import discord
 import responses
-
+import config
 
 # Send messages
 async def send_message(message, user_message, is_private):
@@ -14,7 +14,7 @@ async def send_message(message, user_message, is_private):
 
 
 def run_discord_bot():
-    TOKEN = 'MTA2NTMwMTY4MDM0Mzc2MDk5Nw.GD1MZS.YwG16RajMPTGQrNjfv_O3q1BZTtoAQpg0Wvk7M'
+    TOKEN = config.TOKEN
     client = discord.Client(intents=discord.Intents.all())
     # intents: https://discord.com/developers/docs/topics/gateway#list-of-intents
 
