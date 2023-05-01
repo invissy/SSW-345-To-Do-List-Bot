@@ -1,6 +1,9 @@
-import discord
-import responses
+# libraries https://discord.com/developers/docs/topics/community-resources
+import discord #https://discordpy.readthedocs.io/en/latest/
+# https://discordpy.readthedocs.io/en/stable/ext/commands/index.html
 import config
+import responses
+import taskBoard
 
 # Send messages
 async def send_message(message, user_message, is_private):
@@ -13,10 +16,11 @@ async def send_message(message, user_message, is_private):
         print(e)
 
 
+# async def new_thread(threadName):
+    # await create_thread(threadName)
+
 def run_discord_bot():
-    TOKEN = config.TOKEN
-    client = discord.Client(intents=discord.Intents.all())
-    # intents: https://discord.com/developers/docs/topics/gateway#list-of-intents
+    client = discord.Client(intents=discord.Intents.all()) # intents: https://discord.com/developers/docs/topics/gateway#list-of-intents
 
     @client.event
     async def on_ready():
@@ -35,13 +39,11 @@ def run_discord_bot():
         # Debug printing
         print(f"{username} said: '{user_message}' ({channel})")
 
-        # If the user message contains a '?' in front of the text, it becomes a private message
-        # if user_message[0] == '?':
-        #     user_message = user_message[1:]  # [1:] Removes the '?'
-        #     await send_message(message, user_message, is_private=True)
-        # else:
-        #     await send_message(message, user_message, is_private=False)
-
         await send_message(message, user_message, is_private=False)
-    # Remember to run your bot with your personal TOKEN
-    client.run(TOKEN)
+        
+        if user_message == "thread":
+            await taskBoard.new_thread("thread", message)
+        if user_message == "private thread":
+            await taskBoard.new_thread("private thread", client)
+
+    client.run(config.TOKEN)
